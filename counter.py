@@ -20,7 +20,7 @@ def columnPicker(df, colNum, list1): # This function stores all values belong to
     print("Topic = ", counter) #This line prints which topic currently we are working on and counts each different countables on given column
     return list1
     
-#newlist = columnPicker(df, 2, newlist)
-#detailedIndex(newlist)
+newlist = columnPicker(df, 2, newlist)
+detailedIndex(newlist)
 
 
