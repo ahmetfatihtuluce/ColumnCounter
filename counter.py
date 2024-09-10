@@ -1,6 +1,6 @@
 import pandas as pd
 #(pip install pandas)
-df = pd.read_csv("Correction_Check_3-4.csv") #Location of CSV File
+df = pd.read_csv("") #Location of CSV File
 #df = pd.read_excel("c1.xlsx") #Location of Excel File (pip install openpyxl)
 cat = df.iloc[:, 2]
 cat2 = df.iloc[:, 3]
@@ -15,7 +15,7 @@ cat2 = df.iloc[:, 3]
 
 
 
-#print("sum =" ,cat.value_counts().sum())
+print("sum =" ,cat.value_counts().sum())
 newlist = []
 newlist2 = []
 newlist3 = []
@@ -28,12 +28,22 @@ def detailedIndex(list1): #This function prints value of each row for our column
         
 
 def columnPicker(df, colNum, list1): # This function stores all values belong to the given column as a Series type. Index starts with 0.
-    category = df.iloc[:, colNum] 
-    counter = category.value_counts()
-    df2 = pd.DataFrame(counter)
-    df2.to_csv('a.csv')
-    list1 = category.tolist() #Turning Series type into List type. (This is necessary for easy manupilation)
-    print("Topic = ", counter) #This line prints which topic currently we are working on and counts each different countables on given column
+    combined_df = pd.DataFrame()
+
+    for i in colNum:
+        category = df.iloc[:, i] 
+        counter = category.value_counts()
+        df2 = pd.DataFrame(counter)
+
+        df2.columns = [f'Column_{i}_counts']
+        combined_df = pd.concat([combined_df, df2], axis=1)
+        list1 += category.tolist()
+        combined_df.to_csv('combined_output.csv')
+        """df2.to_csv('a.csv')
+        list1 = category.tolist() #Turning Series type into List type. (This is necessary for easy manupilation)
+        print("Topic = ", counter) #This line prints which topic currently we are working on and counts each different countables on given column
+        """
+        print("", counter)
     return list1
     
 #newlist = columnPicker(df, 2, newlist)
@@ -45,7 +55,8 @@ def columnPicker(df, colNum, list1): # This function stores all values belong to
                
 #detailedIndex(newlist2)
 
+a = [3]
+newlist = columnPicker(df, a, newlist)
 
-newlist = columnPicker(df, 3, newlist)
-print(newlist)
+# print(newlist)
 
